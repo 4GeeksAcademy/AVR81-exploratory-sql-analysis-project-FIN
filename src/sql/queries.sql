@@ -45,9 +45,11 @@ WHERE observation_date = '1998-08-08';
 -- 6. ¿Cuál es el `region_id` con más observaciones? 
 -- Agrupa por región y cuenta cuántas veces aparece cada una;
 
-SELECT region_id, COUNT(*) FROM observations AS total_observations
+SELECT region_id, COUNT(*) AS total_observations
+FROM observations
 GROUP BY region_id
 ORDER BY total_observations DESC
+LIMIT 1;
 
 -- MISSION 7
 -- 7. ¿Cuáles son los 5 `species_id` más frecuentes?
@@ -82,7 +84,7 @@ ORDER BY total_observations DESC;
 -- 10. Muestra el nombre de la región (`regions.name`) para cada observación. 
 --  Relaciona `observations` con `regions` usando `region_id`;
 
-SELECT observations_id, regions_names, AS region_name. observations.observations_date
+SELECT observations.id, regions.name AS region_name
 FROM observations
 JOIN regions ON observations.region_id = regions.id;
 
@@ -90,15 +92,15 @@ JOIN regions ON observations.region_id = regions.id;
 -- 11. Muestra el nombre científico de cada especie registrada (`species.scientific_name`).
 -- Relaciona `observations` con `species` usando `species_id`;
 
-SELECT observations_id, species.scientic_name
+SELECT observations.id, species.scientific_name
 FROM observations
-JOIN species ON observation.species_id = species_id;
+JOIN species ON observations.species_id = species.id;
 
 -- MISSION 12
 -- 12. ¿Cuál es la especie más observada por cada región? 
 -- Agrupa por región y especie, y ordena por cantidad;
 
-SELECT region.name AS region, species_id, COUNT(*) AS total
+SELECT regions.name AS region, species.scientific_name, COUNT(*) AS total
 FROM observations
 JOIN species ON observations.species_id = species.id
 JOIN regions ON observations.region_id = regions.id
